@@ -13,7 +13,7 @@ for (const [file, formName] of pages) {
   assert.match(form, /data-netlify=["']true["']/i, file + ': Netlify capture configuration missing');
   assert.ok(form.includes('name="' + formName + '"'), file + ': form identity changed');
   assert.match(html, /type=["']submit["']/i, file + ': submit button missing');
-  assert.match(form, /data-netlify-honeypot=["']bot-field["']/i, file + ': honeypot not declared');
+  assert.match(form, /netlify-honeypot=["']bot-field["']/i, file + ': honeypot not declared');
   assert.match(html, /name=["']bot-field["']/i, file + ': honeypot field missing');
   assert.match(html, /<\/form>/i, file + ': form not closed');
   console.log('Static markup check passed:', file);
