@@ -16,3 +16,4 @@ jobs:
       - run: node tests/intake-markup.test.cjs
       - run: node tests/official-phone.test.cjs
       - run: node tests/vapi-ingress.test.mjs
+      - run: node tests/vapi-event-normalizer.test.mjs
