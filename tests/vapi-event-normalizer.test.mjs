@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {normalizeRevMotionCallEvent} from '../integrations/vapi-event-normalizer.mjs';
+const sample={message:{type:'end-of-call-report',timestamp:'2026-10-22T20:00:00Z',endedReason:'customer-ended-call',call:{id:'call_123',type:'inboundPhoneCall',phoneNumber:{number:'+14077988755'}},artifact:{transcript:'secret transcript',recordingUrl:'https://example.test/recording'},customer:{number:'+14070000000'}}};
+const out=normalizeRevMotionCallEvent(sample);
+assert.equal(out.provider_call_id,'call_123');assert.equal(out.provider_event_id,'end-of-call-report:call_123');
+assert.equal(out.direction,'inbound');assert.equal(out.business_number,'+14077988755');
+assert.equal(out.sanitized_summary,null);
+assert(!JSON.stringify(out).includes('secret transcript'));assert(!JSON.stringify(out).includes('407000000'));
+assert.deepEqual(normalizeRevMotionCallEvent(sample),out);
+assert.equal(normalizeRevMotionCallEvent({message:{...sample.message,type:'tool-calls'}}),null);
+assert.equal(normalizeRevMotionCallEvent({message:{...sample.message,phoneNumber:{number:'+14075574321'}}}),null);
+assert.equal(normalizeRevMotionCallEvent({message:{...sample.message,call:{...sample.message.call,id:'bad id'}}}),null);
+assert.equal(normalizeRevMotionCallEvent({message:{...sample.message,call:{...sample.message.call,phoneNumber:undefined}}}),null);
+console.log('PASS private RevMotion end-of-call event normalization and PII minimization');
