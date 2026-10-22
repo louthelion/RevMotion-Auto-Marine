@@ -1,1 +1,25 @@
-import assert from 'node:assert/strict';import handler,{verifyWebhook} from '../netlify/functions/revmotion-vapi.mjs';const token='a'.repeat(40);const p={message:{call:{phoneNumber:{number:'+14077988755'}}}};const req=(body,auth)=>new Request('https://example.com/.netlify/functions/revmotion-vapi',{method:'POST',headers:auth?{Authorization:'Bearer '+auth}:{},body:JSON.stringify(body)});assert.equal((await handler(req(p,token))).status,401);assert.equal((await handler(req(p))).status,401);assert.equal(verifyWebhook(new Headers({authorization:'Bearer '+token}),p,token),true);assert.equal(verifyWebhook(new Headers({authorization:'Bearer '+token}),{message:{call:{phoneNumber:{number:'+14075574991'}}}},token),false);assert.equal((await handler(new Request('https://example.com/.netlify/functions/revmotion-vapi'))).status,405);console.log('PASS public ingress denies unconfigured calls and cross-company requests');
+import assert from 'node:assert/strict';
+import handler,{verifyWebhook} from '../netlify/functions/revmotion-vapi.mjs';
+const token='x'.repeat(48);
+const message={type:'end-of-call-report',call:{id:'call_123',phoneNumber:{number:'+14077988755'}}};
+const payload={message};
+const h=new Headers({authorization:'Bearer '+token});
+assert.equal(verifyWebhook(h,payload,token),true);
+assert.equal(verifyWebhook(h,{message:{type:'status-update',call:{id:'call_123'},phoneNumber:{number:'+14077988755'}}},token),true);
+assert.equal(verifyWebhook(h,{message:{...message,phoneNumber:{number:'+14075574991'}}},token),false);
+assert.equal(verifyWebhook(h,{message:{...message,call:{id:'call_123',phoneNumber:{number:'+14075574991'}}}},token),false);
+assert.equal(verifyWebhook(h,{message:{...message,call:{id:'call_123'}}},token),false);
+assert.equal(verifyWebhook(h,{message:{...message,call:{phoneNumber:{number:'+14077988755'}}}},token),false);
+assert.equal(verifyWebhook(h,{message:{...message,type:'tool-calls'}},token),false);
+assert.equal(verifyWebhook(h,payload,undefined),false);
+assert.equal(verifyWebhook(new Headers(),payload,token),false);
+const make=(body,headers={})=>new Request('https://example.test/.netlify/functions/revmotion-vapi',{method:'POST',headers,body});
+assert.equal((await handler(new Request('https://example.test/.netlify/functions/revmotion-vapi'))).status,405);
+assert.equal((await handler(make(JSON.stringify(payload)))).status,401);
+assert.equal((await handler(make('{invalid'))).status,400);
+assert.equal((await handler(make('x'.repeat(65537)))).status,413);
+const old=process.env.REVMOTION_VAPI_WEBHOOK_SECRET;
+try{process.env.REVMOTION_VAPI_WEBHOOK_SECRET=token;
+  assert.equal((await handler(make(JSON.stringify(payload),{authorization:'Bearer '+token}))).status,503);
+}finally{if(old===undefined)delete process.env.REVMOTION_VAPI_WEBHOOK_SECRET;else process.env.REVMOTION_VAPI_WEBHOOK_SECRET=old;}
+console.log('PASS Vapi webhook denies cross-company events and does not ingest even with valid authentication');
