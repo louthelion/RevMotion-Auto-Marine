@@ -1,0 +1,20 @@
+name: RevMotion inquiry fail-closed tests
+on:
+  pull_request:
+    paths:
+      - 'netlify/functions/revmotion-inquiry*.js'
+      - 'tests/revmotion-inquiry.test.cjs'
+      - '.github/workflows/revmotion-inquiry-tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/revmotion-inquiry.test.cjs
