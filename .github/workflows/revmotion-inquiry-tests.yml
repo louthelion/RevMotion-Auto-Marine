@@ -1,5 +1,12 @@
 name: RevMotion inquiry fail-closed tests
 on:
+  push:
+    branches:
+      - 'review/website-readiness-2026-10-03'
+    paths:
+      - 'netlify/functions/revmotion-inquiry*.js'
+      - 'tests/revmotion-inquiry.test.cjs'
+      - '.github/workflows/revmotion-inquiry-tests.yml'
   pull_request:
     paths:
       - 'netlify/functions/revmotion-inquiry*.js'
