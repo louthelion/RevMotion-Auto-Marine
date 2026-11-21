@@ -6,7 +6,7 @@
 
    DATA CONTRACT — one story record:
      id          unique slug, never reused
-     lane        "central-florida" | "world" | "coming"
+     lane        "central-florida" | "world" | "coming" | "market"
      headline    the story headline
      dateISO     story date, YYYY-MM-DD
      dateDisplay the same date written out, e.g. "November 19, 2026"
@@ -20,9 +20,14 @@
    Sources are named in plain text at the end of each story so readers
    can verify the reporting themselves.
 
-   SCOPE: car and boat news ONLY (parked-company rule: news and
+   SCOPE: car and boat news, plus the MARKET lane (stock-market
+   coverage) added by the owner's ruling of November 20, 2026 —
+   every company page carries market talk alongside its own subject.
+   The parked-company rule still governs the selling side: news and
    information only — no offers, no listings, no RevMotion prices,
-   no buying or selling calls to action, no lead capture).
+   no buying or selling calls to action, no lead capture. Market
+   stories report index moves in percentages and points, in plain
+   language, and are information only — never investment advice.
 
    DAILY EDITOR PASS — how to update:
      1. Set REVMOTION_NEWS_EDITION to the new edition date.
@@ -38,6 +43,34 @@ var REVMOTION_NEWS_EDITION = {
 };
 
 var REVMOTION_NEWS = [
+  {
+    id: "market-wrap-2026-11-20",
+    lane: "market",
+    headline: "Wall Street's worst week since April 2025 ends in a rout: S&P 500 and Dow in correction, Nasdaq's 2026 gains gone",
+    dateISO: "2026-11-20",
+    dateDisplay: "November 20, 2026",
+    body: [
+      "Friday was the hardest day of a brutal week on Wall Street. The Nasdaq Composite plunged 5.28%, losing 1,261.47 points — the second-largest one-day points drop in the index's history. The S&P 500 fell 3.70%, or 265.44 points, its seventh straight losing session. The Dow Jones Industrial Average dropped 1.93%, or 949.73 points.",
+      "Both the S&P 500 and the Dow are now in correction territory, meaning each has fallen more than 10% from its recent record high. The Nasdaq's drop erased every gain it had made in 2026, leaving it down about 2.7% for the year. For the full week, the Dow fell 8%, the S&P 500 fell 8.6%, and the Nasdaq fell 10% — the market's worst week since the first week of April 2025, when tariff announcements sent stocks into a tailspin.",
+      "Two forces drove the selling: investors are unwinding the artificial-intelligence trade that led the market for two years, and minutes from the Federal Reserve's October meeting, released Wednesday, pointed to further interest-rate increases ahead. The VIX, Wall Street's fear gauge, jumped 26% on Friday to near 36."
+    ],
+    source: "Investopedia, Markets News",
+    sourceDate: "November 20, 2026"
+  },
+  {
+    id: "ai-trade-unwinds-2026-11-20",
+    lane: "market",
+    headline: "The AI trade unwinds: Nvidia falls 14% in a day, and even Anthropic's record IPO cannot lift the market",
+    dateISO: "2026-11-20",
+    dateDisplay: "November 20, 2026",
+    body: [
+      "The stocks that led the market up led it down. Nvidia, the bellwether of the AI boom, fell 14% on Friday, leading the Dow's decliners; its shares have lost about a third of their value in two weeks. Advanced Micro Devices dropped 13%, and Broadcom, Marvell Technology, and Micron each posted double-digit declines.",
+      "Not even the biggest IPO on record could change the mood. Anthropic, the AI lab that debuted on Thursday — its shares jumped to $111.50 from an $83 IPO price and closed that day around $97 — fell nearly 9% on Friday to around $89 in its second session.",
+      "The retreat spread well beyond chips: Meta Platforms fell 6%, and Tesla and SpaceX each fell 8%. Away from stocks, bitcoin traded around $59,000, its lowest level since June, gold futures fell 4%, oil futures rose 1.1%, and the yield on the 10-year Treasury note eased to 4.94% from 5.05% the day before."
+    ],
+    source: "Investopedia, Markets News",
+    sourceDate: "November 20, 2026"
+  },
   {
     id: "orange-county-boating-hearing-2026-12-01",
     lane: "central-florida",

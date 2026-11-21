@@ -32,6 +32,11 @@ a{text-decoration:none;color:inherit}
 .name b{background:linear-gradient(90deg,var(--red),var(--blue));-webkit-background-clip:text;color:transparent}
 .menu{display:flex;gap:9px;flex-wrap:wrap}
 .menu a{border:1px solid rgba(0,210,255,.33);padding:10px 12px;font-weight:850;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--silver)}
+/* Mobile menu: a <details class="hamb"> block in the header (the fleet pattern, same as VitalPath) mirrors the desktop nav links. Desktop hides it; under 900px the inline .menu hides and the details dropdown carries the same links, so navigation — including News — is always reachable. */
+.hamb{display:none}
+.hamb summary{border:1px solid rgba(0,210,255,.33);padding:10px 14px;font-weight:850;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--silver);background:rgba(9,24,39,.9);cursor:pointer;list-style:none;white-space:nowrap}
+.hamb summary::-webkit-details-marker{display:none}
+.head details[open] summary{color:#fff;border-color:var(--cyan)}
 .hero{position:relative;padding:84px 0;background:linear-gradient(90deg,rgba(2,5,10,.96),rgba(8,22,36,.85));background-size:cover;background-position:center;border-bottom:1px solid var(--line)}
 .eyebrow,.ey{color:var(--cyan);font-size:13px;font-weight:950;text-transform:uppercase;letter-spacing:4px;margin-bottom:12px}
 h1{font-size:clamp(42px,8vw,82px);line-height:1.05;margin-bottom:18px}
@@ -70,5 +75,5 @@ footer{padding:55px 0;text-align:center;background:#02050a}
 .footlinks{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0}
 .footlinks a{border:1px solid rgba(0,210,255,.28);padding:10px 12px;color:var(--silver);font-weight:800;text-transform:uppercase;font-size:12px}
 .footlegal{font-size:14px}
-@media(max-width:900px){.menu{display:none}.cards{grid-template-columns:1fr 1fr}.articles,.lessons{grid-template-columns:1fr}}
+@media(max-width:900px){.menu{display:none}.hamb{display:block;margin-left:auto}.head details[open] .menu{display:grid;gap:8px;position:absolute;left:16px;right:16px;top:100%;margin-top:8px;background:linear-gradient(180deg,rgba(9,24,39,.98),rgba(2,5,10,.98));border:1px solid var(--line);padding:14px;box-shadow:var(--shadow);z-index:40}.head details[open] .menu a{display:block;padding:12px 14px}.cards{grid-template-columns:1fr 1fr}.articles,.lessons{grid-template-columns:1fr}}
 @media(max-width:650px){.wrap{width:min(1180px,calc(100% - 28px))}.head{min-height:76px}.logo{width:52px;height:52px}.name{font-size:16px;white-space:normal;line-height:1.05}.cards,.formgrid{grid-template-columns:1fr}.step{grid-template-columns:1fr}}

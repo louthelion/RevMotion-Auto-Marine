@@ -8,7 +8,8 @@
   var LANES = {
     "central-florida": "Central Florida",
     "world": "World",
-    "coming": "New Cars & Boats Coming"
+    "coming": "New Cars & Boats Coming",
+    "market": "Market"
   };
 
   function el(tag, className, text) {
